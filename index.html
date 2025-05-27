@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        let decisions = [
+            { //extreme heat -> rising temperatures, health risks to vunerable residents, public health consequences
+                title: "Extreme Heat",
+                descriptions: [
+                    {
+                        title: "Rising Temperatures and Climate Change",
+                        description: `Extreme heat is increasing in Toronto due to climate change. Annual temperatures are expected to rise more than 2 degrees higher 
+                            than 1980 levels before 2040.`
+                    },
+                    {
+                        title: "Health Risks to Vulnerable Residents",
+                        description: `Increased temperatures are causing health risks, especially for vulnerable residents who may not have access to adequate indoor 
+                            cooling, leading to higher rates of heat stroke (1). Many residents are complaining about symptoms like dizziness, blurred vision, seizures, 
+                            and dry skin due to the heat.`
+                    },
+                    {
+                        title: "Public Health Consequences",
+                        description: `Your public health advisor estimates extreme heat contributes to around 120 premature deaths and many more hospitalizations every year 
+                            in Toronto, a number expected to grow much larger (2). The advisor continues by explaining that the body tries to direct more blood to the skin 
+                            to compensate for the heat, but that reduces blood flow elsewhere. This leads to organ dysfunction, and in some cases death.`
+                    }
+                ],
+                options: [
+                    {
+                        icon: "🏥",
+                        title: "The public health advisor suggests establishing a law to ensure all residential units can be kept at a temperature under 26°C.",
+                        description: `This measure is would protect renters from the health risks associated with extreme indoor heat, which is expected to become more 
+                            frequent and severe due to climate change. However, it would be expensive to retrofit older buildings, which would increase rent prices.`,
+                        moneyEffect: 1,
+                        supportEffect: 10,
+                        resistanceEffect: 10,
+
+                    },
+                    {
+                        icon: "💵",
+                        title: "The financial advisor suggests subsidizing heat pumps or air conditioners",
+                        description: `A subsidy for installing high-efficiency heat pumps or air conditioners would require an investment of $20-30 million annually. 
+                            It would increase access to cooling for all residents.`,
+                        moneyEffect: 30,
+                        supportEffect: 10,
+                        resistanceEffect: 5,
+                    },
+                    {
+                        icon: "🪢",
+                        title: "The community outreach advisor suggests equipping libraries and other community centers with air conditioning and opening them to the public",
+                        description: `600 publicly accessible cool spaces such as libraries, community centers, and civic centers, equipped with air conditioning, 
+                            and open to the public during heat events would provide respite for residents who may not have access to cooling at home. The City would 
+                            maintain and promote these spaces, especially during heat warnings. However, these spaces may become overcrowded during heat waves and may not 
+                            reach all residents.`,
+                        moneyEffect: 50,
+                        supportEffect: -10,
+                        resistanceEffect: 15,
+                    },
+                    {
+                        icon: "🌎",
+                        title: "The sustainability advisor suggests expanding deep lake water cooling",
+                        description: `This system would use cold water from Lake Ontario to efficiently cool large buildings in downtown Toronto, significantly lowering 
+                            electricity use and greenhouse gas emissions compared to conventional air conditioning. Expanding this infrastructure would help the city adapt 
+                            to hotter summers while advancing its climate goals. However, it would take a while to complete, and would not affect people that don't live 
+                            downtown.`,
+                        moneyEffect: 50,
+                        supportEffect: -15,
+                        resistanceEffect: 20,
+                    }
+                ]
+            },
+            { //more rain and storms -> more precipitations, wetter wet days and dryer dry days, runoff from floods is pulluting waterways
+                title: "More rain and storms",
+                descriptions: [
+                    {
+                        title: "More Precipitation",
+                        description: `Compared to the 1980s, your advisors expect 5-6% more precipitation by the 2030s, and 10% by the 2050s, and 11-16% by the 2080s. 
+                            Additionally, more rain is falling at near-freezing temperatures as winters get warmer. This results in resulting in even more ice jams, 
+                            which is where ice flowing down a river blocks the river causing flooding.`
+                    },
+                    {
+                        title: "Wetter Wet Days and Dryer Dry Days",
+                        description: `The maximum amount of precipitation in one day is predicted to increase 17% by the 2050s. This makes the dry days dryer causing more 
+                            droughts, and the wet days even wetter causing massive structural damage.`
+                    },
+                    {
+                        title: "Runoff from Floods is Polluting Waterways",
+                        description: `During the July 16 2024 storm, over 1.3 billion liters of partially treated sewage water was drained into lake Ontario. Your health 
+                            advisor tells you there are now high levels of e-coli in the water, and it could take up to two weeks to clean.`
+                    }
+                ],
+                options: [
+                    {
+                        icon: "🌎",
+                        title: "The sustainability advisor suggests expanding sewer capacity and building and large holding tanks.",
+                        description: `He tells you some of Toronto's pipes are 100 years old, and are not designed to handle the 3 once-in-a-hundred-year storms we 
+                            experienced in the past 10 years. He estimates the cost at $3.7 billion dollars. Once complete, the project would relieve pressure on the 
+                            sewer system and decrease damage from floods, however it would take a while to complete, and is not visible to the public. (2)`,
+                        moneyEffect: 3700,
+                        supportEffect: -10,
+                        resistanceEffect: 30,
+                    },
+                    {
+                        icon: "🪢",
+                        title: "The community outreach advisor suggests building custom flood mitigation programs for the most affected neighborhoods.",
+                        description: `He is currently working on preliminary studies, and has 60 out of the 67 studies completed. He has spent $1.1 billion on the project 
+                            out of his department's budget, but is requesting more funding to complete the program. He is estimating an $18.6 billion dollar cost. 
+                            This would show the city you are taking the problem seriously in the short and long term, but would be very expensive. (2)`,
+                        moneyEffect: 18600,
+                        supportEffect: 30,
+                        resistanceEffect: 30,
+                    },
+                    {
+                        icon: "🏥",
+                        title: "The public health advisor suggests building stormwater bypass tunnels to divert sewage and runoff during heavy rains, preventing contamination of waterways.",
+                        description: `The advisor suggests starting with a main bypass tunnel with large holding cells to store excess water during storms. It would lead 
+                            to a water treatment plant, and divert water away from current outdated sewage systems. She projects a $3 billion dollar cost, 
+                            but it would not be complete for some time.`,
+                        moneyEffect: 3000,
+                        supportEffect: -5,
+                        resistanceEffect: 20
+
+                    },
+                    {
+                        icon: "💵",
+                        title: "The financial advisor suggests greening roofs and roads to help slow down runoff.",
+                        description: `The financial advisor suggests incentivizing technologies like permeable pavement, and rain gardens. Permeable pavement allows 
+                            water that falls on it to go through the pavement and get absorbed by the ground. A rain garden is a shallow depression in the ground 
+                            designed to let rain water into it. It has highly permeable soil at the bottom, so the water gets absorbed into the ground, reducing the 
+                            strain on sewer systems. He expects the cost to be around $3 billion for these incentive programs, but most of the cost would be covered by the 
+                            private sector. However, many members of the public don't believe that these technologies can effectively combat the storms.`,
+                        moneyEffect: 100,
+                        supportEffect: 5,
+                        resistanceEffect: 10
+                    }
+                ]
+
+            },
+            {
+                
+            }
+        ]
+
+        let currentIndex = 0;
+        const next = () => { //clears current screen and displays the next selection
+            currentIndex++;
+            
+            //clear the body
+            document.body.innerHTML = "";
+
+            // Create main wrapper
+            const mainWrapper = document.createElement('div');
+            mainWrapper.className = 'mainWrapper';
+
+            // Create and append main title
+            const mainTitle = document.createElement('h1');
+            mainTitle.id = 'mainTitle';
+            mainTitle.className = 'mainTitle';
+            mainTitle.innerHTML = decisions[currentIndex].title;
+            mainWrapper.appendChild(mainTitle);
+
+            // Create and append subProblemsWrapper
+            const subProblemsWrapper = document.createElement('div');
+            subProblemsWrapper.id = 'subProblemsWrapper';
+            mainWrapper.appendChild(subProblemsWrapper);
+
+
+            //put in the subproblems
+            decisions[currentIndex].descriptions.forEach((subproblem) => {
+                const subProblemWrapper = document.createElement("div");
+                subProblemWrapper.classList.add("subProblemWrapper");
+
+                //title element
+                const title = document.createElement("h2");
+                title.innerHTML = subproblem.title;
+
+                // Description element (hidden by default)
+                const description = document.createElement("p");
+                description.innerHTML = subproblem.description;
+                description.classList.add("optionDescription");
+
+                //open/close on click
+                subProblemWrapper.onclick = () => {
+                    description.classList.toggle("open");
+                };
+
+                subProblemWrapper.appendChild(title);
+                subProblemWrapper.appendChild(description);
+                subProblemsWrapper.appendChild(subProblemWrapper);
+            })
+            
+            // Create decisionsWrapper
+            const decisionsWrapper = document.createElement('div');
+            decisionsWrapper.id = 'decisionsWrapper';
+
+            decisionsWrapper.innerHTML = "";
+            decisions[currentIndex].options.forEach((option, i) => {
+                const mainDiv = document.createElement("div");
+
+                const optionWrapper = document.createElement("div");
+                optionWrapper.classList.add("optionBox");
+
+                // Icon element
+                const iconSpan = document.createElement("span");
+                iconSpan.classList.add("optionIcon");
+                iconSpan.innerHTML = option.icon;
+
+                //next button
+                const nextButton = document.createElement("button");
+                nextButton.classList.add("nextButton");
+                nextButton.innerHTML = "SELECT";
+                nextButton.onclick = () => showOutcome(i);
+
+                // Title element
+                const title = document.createElement("h3");
+                title.innerHTML = option.title;
+
+                // Container for icon + title (row)
+                const headerContainer = document.createElement("div");
+                headerContainer.classList.add("optionHeader");
+                headerContainer.appendChild(iconSpan);
+                headerContainer.appendChild(nextButton);
+
+                // Description element (hidden by default)
+                const description = document.createElement("p");
+                description.innerHTML = option.description;
+                description.classList.add("optionDescription");
+
+                optionWrapper.onclick = () => {
+                    description.classList.toggle("open");
+                };
+
+                // Assemble
+                optionWrapper.appendChild(headerContainer);
+                optionWrapper.appendChild(title);
+                optionWrapper.appendChild(description);
+
+                mainDiv.appendChild(optionWrapper);
+                decisionsWrapper.appendChild(mainDiv);
+            });
+
+            // Append everything to the document body
+            document.body.appendChild(mainWrapper);
+            document.body.appendChild(decisionsWrapper);
+        }
+
+        const showOutcome = (selectedOption) => { //shows outcome when selection is made. selectedOption is the index in the decisions array
+            document.body.innerHTML = "";
+
+            // Create main wrapper
+            const mainWrapper = document.createElement('div');
+            mainWrapper.className = 'mainWrapper';
+
+            // Create and append main title
+            const mainTitle = document.createElement('h1');
+            mainTitle.id = 'mainTitle';
+            mainTitle.className = 'mainTitle';
+            mainTitle.innerHTML = decisions[currentIndex].options[selectedOption].title;
+            mainWrapper.appendChild(mainTitle);
+
+            //show each result
+            const statsDisplayContainer = document.createElement("div");
+            statsDisplayContainer.className = "outcomesListWrapper";
+
+            //cost
+            const moneyChangeContainer = document.createElement("div");
+            moneyChangeContainer.className = "outcomeWrapper";
+
+            const moneyChangeText = document.createElement("h2");
+
+            const cost = decisions[currentIndex].options[selectedOption].moneyEffect;
+            
+            //set color and append
+            moneyChangeText.style.color = 'grey';
+            moneyChangeText.innerHTML = `💰  Cost: $${cost} million`;
+            moneyChangeContainer.appendChild(moneyChangeText);
+
+            
+
+            //public suport change
+            const suportChangeContainer = document.createElement("div");
+            suportChangeContainer.className = "outcomeWrapper";
+
+            const suportChangeText = document.createElement("h2");
+
+            const suportValue = decisions[currentIndex].options[selectedOption].supportEffect;
+            
+            //set color and append
+            suportChangeText.style.color = suportValue < 0 ? 'rgb(200, 50, 50)' : 'rgb(50, 200, 50)';
+            suportChangeText.innerHTML = suportValue < 0 ? ` 🗣️ Public Support Change: ${suportValue}` : ` 🗣️ Public Support Change: +${suportValue}`;
+            suportChangeContainer.appendChild(suportChangeText);
+
+            // climate res change
+            const resistanceChangeContainer = document.createElement("div");
+            resistanceChangeContainer.className = "outcomeWrapper";
+
+            const resistanceChangeText = document.createElement("h2");
+
+            const resistanceValue = decisions[currentIndex].options[selectedOption].resistanceEffect;
+
+            // Set color and append
+            resistanceChangeText.style.color = resistanceValue < 0 ? 'rgb(200, 50, 50)' : 'rgb(50, 200, 50)';
+            resistanceChangeText.innerHTML = resistanceValue < 0 ? ` 🛡️ Climate Change Resistance Change: ${resistanceValue}` : ` 🛡️ Climate Change Resistance Change: +${resistanceValue}`          
+            resistanceChangeContainer.appendChild(resistanceChangeText);
+
+            // next button
+            const nextButton = document.createElement("div");
+            nextButton.className = "nextSituationButton";
+
+            const nextButtonText = document.createElement("h2");
+            nextButtonText.style.textAlign = 'center';
+            nextButtonText.style.width = '100%';
+
+            // Set color and append
+            nextButtonText.style.color = 'rgb(50, 200, 50)';
+            nextButtonText.innerHTML = "Next";          
+            nextButton.appendChild(nextButtonText);
+
+            statsDisplayContainer.appendChild(moneyChangeContainer);
+            statsDisplayContainer.appendChild(suportChangeContainer);
+            statsDisplayContainer.appendChild(resistanceChangeContainer);
+            statsDisplayContainer.appendChild(nextButton);
+
+            nextButton.onclick = next;
+
+            document.body.appendChild(mainWrapper);
+            document.body.appendChild(statsDisplayContainer);
+
+        }
+        
+        //when it loads, show the next selection. init to -1 so next is 0.
+        window.addEventListener('load', () => {
+            currentIndex = -1;
+            next();
+        });
+
+
+
+
+    </script>
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #71a7f7 0%, #ffffff 100%);
+            background-size: 200% 200%;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            animation: backgroundAnim 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes backgroundAnim{
+            0%{
+                background-position: 0% 0%;
+            }
+            100%{
+                background-position: 100% 100%;
+            }
+        }
+
+        /* classes for the main title/description */
+        .mainWrapper{
+            max-width: 90vw;
+            margin: 10px auto;
+            padding: 10px 40px;
+            background-color: #ffffff;
+            color: #333333;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            box-sizing: border-box;
+        }
+
+        .mainWrapper h1 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 3rem;
+            color: #222222;
+            text-align: center;
+        }
+
+        .mainWrapper p {
+            font-size: 1rem;
+            color: #444444;
+        }
+
+        /* wrapper for all subproblems */
+        #subProblemsWrapper{
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            align-items: start;
+        }
+
+        /* individual subproblems */
+        .subProblemWrapper{
+            text-align: center;
+            width: 20vw;
+            height: auto;
+            background-color: #eaf3ff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 0px 2vw;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subProblemWrapper:hover{
+            background-color: #b1d3ff;
+        }
+
+        .subProblemWrapper h2{
+            padding: 0px;
+        }
+
+        /* all possible solution options wrapper */
+        #decisionsWrapper{
+            display: grid;
+            grid-template-columns: auto auto;
+        }
+
+        /*wrapper for each option*/
+        .optionBox {
+            width: 43vw;
+            height: auto;
+            margin: 10px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 18px;
+            background: #fafbfc;
+            border: 1.5px solid #e3e8ee;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(30, 42, 70, 0.06);
+            cursor: pointer;
+            padding: 20px 24px;
+            text-align: left;
+            transition: all 0.3s ease;  
+        }
+
+        .optionBox:hover{
+            background: #e0f0ff;
+        }
+
+        /* title for each option */
+        .optionBox h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.15rem;
+            color: #22314a;
+            font-weight: 600;
+        }
+
+        /* header with the icon and the select button */
+        .optionHeader{
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between
+        }
+
+        /* dropdown in closed position */
+        .optionDescription{
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* opened dropdown */
+        .open{
+            margin: 15px 0px;
+            opacity: 1;
+            max-height: 100000px;
+        }
+
+        /* the icon */
+        .optionIcon {
+            align-self: center;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .optionBox p {
+            margin: 0;
+            color: #4b5a6a;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* the select this option button*/
+        .nextButton{
+            cursor: pointer;
+            background-color: #b6d5f4;
+            border: 0px;
+            padding: 10px;
+            border-radius: 100vw;
+            transition: all 0.3s ease;
+        }
+
+        .nextButton:hover{
+            background-color: #93c9ff;
+        }
+
+        /* wrapper for all outcomes */
+        .outcomesListWrapper{
+            width: 100%;
+        }
+
+        /* wrapper for each individual outcome */
+        .outcomeWrapper{
+            width: 70vw;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #333333;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+        }
+
+        /* button to go to next situation */
+        .nextSituationButton{
+            width: 50vw;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            border-radius: 999px;
+            color: #333333;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            cursor: grab;
+        }
+
+        .nextSituationButton:hover{
+            background-color: #9bedff;
+            translate: 0px 2px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 1);
+        }
+
+        /* when screen width is to narrow, set the grid to 1 wide */
+        @media (max-width: 900px) {
+            #decisionsWrapper {
+                grid-template-columns: auto;
+            }
+            .optionBox {
+                width: 80vw;
+            }
+        }
+
+    </style>
+</head>
+<body>
+</body>
+</html>
