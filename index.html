@@ -2,211 +2,207 @@
 <html>
 <head>
     <script>
+        class Situation {
+            constructor(title, subproblems, options){
+                this._title = title;
+                this._subproblems = subproblems;
+                this._options = options;
+            }
+            get title(){ return this._title; }
+            get subproblems(){ return this._subproblems; }
+            get options(){ return this._options; }
+        }
+
+        class SubProblem{
+            constructor(title, description){
+                this._title = title;
+                this._description = description;
+            }
+            get title(){ return this._title; }
+            get description(){ return this._description; }
+        }
+
+        class Option extends SubProblem{ //subproblem has title and descriptoin, option needs title, description, and others.
+            constructor(title, description, icon, cost, psChange, crChange){ //ps is public support, cr is climate resistance
+                super(title, description);
+                this._icon = icon;
+                this._cost = cost;
+                this._psChange = psChange;
+                this._crChange = crChange;
+            }
+            get icon(){ return this._icon; }
+            get cost(){ return this._cost; }
+            get psChange(){ return this._psChange; }
+            get crChange(){ return this._crChange; }
+
+        }
+
         let decisions = [
-            { //extreme heat -> rising temperatures, health risks to vunerable residents, public health consequences
-                title: "Extreme Heat",
-                descriptions: [
-                    {
-                        title: "Rising Temperatures and Climate Change",
-                        description: `Extreme heat is increasing in Toronto due to climate change. Annual temperatures are expected to rise more than 2 degrees higher 
-                            than 1980 levels before 2040.`
-                    },
-                    {
-                        title: "Health Risks to Vulnerable Residents",
-                        description: `Increased temperatures are causing health risks, especially for vulnerable residents who may not have access to adequate indoor 
-                            cooling, leading to higher rates of heat stroke (1). Many residents are complaining about symptoms like dizziness, blurred vision, seizures, 
-                            and dry skin due to the heat.`
-                    },
-                    {
-                        title: "Public Health Consequences",
-                        description: `Your public health advisor estimates extreme heat contributes to around 120 premature deaths and many more hospitalizations every year 
-                            in Toronto, a number expected to grow much larger (2). The advisor continues by explaining that the body tries to direct more blood to the skin 
-                            to compensate for the heat, but that reduces blood flow elsewhere. This leads to organ dysfunction, and in some cases death.`
-                    }
+            new Situation(
+                'Extreme Heat',
+                [
+                    new SubProblem(
+                        'Rising Temperatures and Climate Change',
+                        `Extreme heat is increasing in Toronto due to climate change. Annual temperatures are expected to rise more than 2 degrees higher 
+                        than 1980 levels before 2040.`
+                    ),
+                    new SubProblem(
+                        'Health Risks to Vulnerable Residents',
+                        `Increased temperatures are causing health risks, especially for vulnerable residents who may not have access to adequate indoor 
+                        cooling, leading to higher rates of heat stroke (1). Many residents are complaining about symptoms like dizziness, blurred vision, seizures, 
+                        and dry skin due to the heat.`
+                    ),
+                    new SubProblem(
+                        'Public Health Consequences',
+                        `Your public health advisor estimates extreme heat contributes to around 120 premature deaths and many more hospitalizations every year 
+                        in Toronto, a number expected to grow much larger (2). The advisor continues by explaining that the body tries to direct more blood to the skin 
+                        to compensate for the heat, but that reduces blood flow elsewhere. This leads to organ dysfunction, and in some cases death.`
+                    )
                 ],
-                options: [
-                    {
-                        icon: "🏥",
-                        title: "The public health advisor suggests establishing a law to ensure all residential units can be kept at a temperature under 26°C.",
-                        description: `This measure is would protect renters from the health risks associated with extreme indoor heat, which is expected to become more 
-                            frequent and severe due to climate change. However, it would be expensive to retrofit older buildings, which would increase rent prices.`,
-                        moneyEffect: 1,
-                        supportEffect: -5,
-                        resistanceEffect: 15,
-
-                    },
-                    {
-                        icon: "💵",
-                        title: "The financial advisor suggests subsidizing heat pumps or air conditioners",
-                        description: `A subsidy for installing high-efficiency heat pumps or air conditioners would require an investment of $20-30 million annually. 
-                            It would increase access to cooling for all residents.`,
-                        moneyEffect: 30,
-                        supportEffect: 15,
-                        resistanceEffect: 12,
-                    },
-                    {
-                        icon: "🪢",
-                        title: "The community outreach advisor suggests equipping libraries and other community centers with air conditioning and opening them to the public",
-                        description: `600 publicly accessible cool spaces such as libraries, community centers, and civic centers, equipped with air conditioning, 
-                            and open to the public during heat events would provide respite for residents who may not have access to cooling at home. The City would 
-                            maintain and promote these spaces, especially during heat warnings. However, these spaces may become overcrowded during heat waves and may not 
-                            reach all residents.`,
-                        moneyEffect: 50,
-                        supportEffect: 5,
-                        resistanceEffect: 8,
-                    },
-                    {
-                        icon: "🌎",
-                        title: "The sustainability advisor suggests expanding deep lake water cooling",
-                        description: `This system would use cold water from Lake Ontario to efficiently cool large buildings in downtown Toronto, significantly lowering 
-                            electricity use and greenhouse gas emissions compared to conventional air conditioning. Expanding this infrastructure would help the city adapt 
-                            to hotter summers while advancing its climate goals. However, it would take a while to complete, and would not affect people that don't live 
-                            downtown.`,
-                        moneyEffect: 100,
-                        supportEffect: -10,
-                        resistanceEffect: 20,
-                    }
+                [
+                    new Option(
+                        'The public health advisor suggests establishing a law to ensure all residential units can be kept at a temperature under 26°C.',
+                        `This measure is would protect renters from the health risks associated with extreme indoor heat, which is expected to become more 
+                        frequent and severe due to climate change. However, it would be expensive to retrofit older buildings, which would increase rent prices.`,
+                        '🏥', 1, -5, 15
+                    ),
+                    new Option(
+                        'The financial advisor suggests subsidizing heat pumps or air conditioners',
+                        `A subsidy for installing high-efficiency heat pumps or air conditioners would require an investment of $20-30 million annually. 
+                        It would increase access to cooling for all residents.`,
+                        '💵', 30, 15, 12
+                    ),
+                    new Option(
+                        'The community outreach advisor suggests equipping libraries and other community centers with air conditioning and opening them to the public',
+                        `600 publicly accessible cool spaces such as libraries, community centers, and civic centers, equipped with air conditioning, 
+                        and open to the public during heat events would provide respite for residents who may not have access to cooling at home. The City would 
+                        maintain and promote these spaces, especially during heat warnings. However, these spaces may become overcrowded during heat waves and may not 
+                        reach all residents.`,
+                        '🪢', 50, 5, 8
+                    ),
+                    new Option(
+                        'The sustainability advisor suggests expanding deep lake water cooling',
+                        `This system would use cold water from Lake Ontario to efficiently cool large buildings in downtown Toronto, significantly lowering 
+                        electricity use and greenhouse gas emissions compared to conventional air conditioning. Expanding this infrastructure would help the city adapt 
+                        to hotter summers while advancing its climate goals. However, it would take a while to complete, and would not affect people that don't live 
+                        downtown.`,
+                        '🌎', 100, -10, 20
+                    )
                 ]
-            },
-            { //more rain and storms -> more precipitations, wetter wet days and dryer dry days, runoff from floods is pulluting waterways
-                title: "More rain and storms",
-                descriptions: [
-                    {
-                        title: "More Precipitation",
-                        description: `Compared to the 1980s, your advisors expect 5-6% more precipitation by the 2030s, and 10% by the 2050s, and 11-16% by the 2080s. 
-                            Additionally, more rain is falling at near-freezing temperatures as winters get warmer. This results in resulting in even more ice jams, 
-                            which is where ice flowing down a river blocks the river causing flooding.`
-                    },
-                    {
-                        title: "Wetter Wet Days and Dryer Dry Days",
-                        description: `The maximum amount of precipitation in one day is predicted to increase 17% by the 2050s. This makes the dry days dryer causing more 
-                            droughts, and the wet days even wetter causing massive structural damage.`
-                    },
-                    {
-                        title: "Runoff from Floods is Polluting Waterways",
-                        description: `During the July 16 2024 storm, over 1.3 billion liters of partially treated sewage water was drained into lake Ontario. Your health 
-                            advisor tells you there are now high levels of e-coli in the water, and it could take up to two weeks to clean.`
-                    }
+            ),
+            new Situation(
+                'More rain and storms',
+                [
+                    new SubProblem(
+                        'More Precipitation',
+                        `Compared to the 1980s, your advisors expect 5-6% more precipitation by the 2030s, and 10% by the 2050s, and 11-16% by the 2080s. 
+                        Additionally, more rain is falling at near-freezing temperatures as winters get warmer. This results in resulting in even more ice jams, 
+                        which is where ice flowing down a river blocks the river causing flooding.`
+                    ),
+                    new SubProblem(
+                        'Wetter Wet Days and Dryer Dry Days',
+                        `The maximum amount of precipitation in one day is predicted to increase 17% by the 2050s. This makes the dry days dryer causing more 
+                        droughts, and the wet days even wetter causing massive structural damage.`
+                    ),
+                    new SubProblem(
+                        'Runoff from Floods is Polluting Waterways',
+                        `During the July 16 2024 storm, over 1.3 billion liters of partially treated sewage water was drained into lake Ontario. Your health 
+                        advisor tells you there are now high levels of e-coli in the water, and it could take up to two weeks to clean.`
+                    )
                 ],
-                options: [
-                    {
-                        icon: "🌎",
-                        title: "The sustainability advisor suggests expanding sewer capacity and building and large holding tanks.",
-                        description: `He tells you some of Toronto's pipes are 100 years old, and are not designed to handle the 3 once-in-a-hundred-year storms we 
-                            experienced in the past 10 years. He estimates the cost at $3.7 billion dollars. Once complete, the project would relieve pressure on the 
-                            sewer system and decrease damage from floods, however it would take a while to complete, and is not visible to the public. (2)`,
-                        moneyEffect: 3700,
-                        supportEffect: -5,
-                        resistanceEffect: 25,
-                    },
-                    {
-                        icon: "🪢",
-                        title: "The community outreach advisor suggests building custom flood mitigation programs for the most affected neighborhoods.",
-                        description: `He is currently working on preliminary studies, and has 60 out of the 67 studies completed. He has spent $1.1 billion on the project 
-                            out of his department's budget, but is requesting more funding to complete the program. He is estimating an $18.6 billion dollar cost over 5 years, 
-                            or about $3.7 billion per year. This would be very popular in neighborhoods faced with flooding, but results won't benifit everyone.`,
-                        moneyEffect: 3720,
-                        supportEffect: 10,
-                        resistanceEffect: 18,
-                    },
-                    {
-                        icon: "🏥",
-                        title: "The public health advisor suggests building stormwater bypass tunnels to divert sewage and runoff during heavy rains, preventing contamination of waterways.",
-                        description: `The advisor suggests starting with a main bypass tunnel with large holding cells to store excess water during storms. It would lead 
-                            to a water treatment plant, and divert water away from current outdated sewage systems. She projects a $3 billion dollar cost, 
-                            but it would not be complete for some time.`,
-                        moneyEffect: 3000,
-                        supportEffect: 0,
-                        resistanceEffect: 20
-
-                    },
-                    {
-                        icon: "💵",
-                        title: "The financial advisor suggests greening roofs and roads to help slow down runoff.",
-                        description: `The financial advisor suggests incentivizing technologies like permeable pavement, and rain gardens. Permeable pavement allows 
-                            water that falls on it to go through the pavement and get absorbed by the ground. A rain garden is a shallow depression in the ground 
-                            designed to let rain water into it. It has highly permeable soil at the bottom, so the water gets absorbed into the ground, reducing the 
-                            strain on sewer systems. He expects the cost to be around $3 billion for these incentive programs, but most of the cost would be covered by the 
-                            private sector. However, many members of the public don't believe that these technologies can effectively combat the storms.`,
-                        moneyEffect: 100,
-                        supportEffect: 10,
-                        resistanceEffect: 15
-                    }
+                [
+                    new Option(
+                        'The sustainability advisor suggests expanding sewer capacity and building and large holding tanks.',
+                        `He tells you some of Toronto's pipes are 100 years old, and are not designed to handle the 3 once-in-a-hundred-year storms we 
+                        experienced in the past 10 years. He estimates the cost at $3.7 billion dollars. Once complete, the project would relieve pressure on the 
+                        sewer system and decrease damage from floods, however it would take a while to complete, and is not visible to the public. (2)`,
+                        '🌎', 3700, -5, 25
+                    ),
+                    new Option(
+                        'The community outreach advisor suggests building custom flood mitigation programs for the most affected neighborhoods.',
+                        `He is currently working on preliminary studies, and has 60 out of the 67 studies completed. He has spent $1.1 billion on the project 
+                        out of his department's budget, but is requesting more funding to complete the program. He is estimating an $18.6 billion dollar cost over 5 years, 
+                        or about $3.7 billion per year. This would be very popular in neighborhoods faced with flooding, but results won't benifit everyone.`,
+                        '🪢', 3720, 10, 18
+                    ),
+                    new Option(
+                        'The public health advisor suggests building stormwater bypass tunnels to divert sewage and runoff during heavy rains, preventing contamination of waterways.',
+                        `The advisor suggests starting with a main bypass tunnel with large holding cells to store excess water during storms. It would lead 
+                        to a water treatment plant, and divert water away from current outdated sewage systems. She projects a $3 billion dollar cost, 
+                        but it would not be complete for some time.`,
+                        '🏥', 3000, 0, 20
+                    ),
+                    new Option(
+                        'The financial advisor suggests greening roofs and roads to help slow down runoff.',
+                        `The financial advisor suggests incentivizing technologies like permeable pavement, and rain gardens. Permeable pavement allows 
+                        water that falls on it to go through the pavement and get absorbed by the ground. A rain garden is a shallow depression in the ground 
+                        designed to let rain water into it. It has highly permeable soil at the bottom, so the water gets absorbed into the ground, reducing the 
+                        strain on sewer systems. He expects the cost to be around $3 billion for these incentive programs, but most of the cost would be covered by the 
+                        private sector. However, many members of the public don't believe that these technologies can effectively combat the storms.`,
+                        '💵', 100, 10, 15
+                    )
                 ]
-
-            },
-            {
-                title: "Smog",
-                descriptions: [
-                    {
-                    title: "Smog description",
-                    description: `Smog is a mixture of pollutants, mainly ozone and particulate matter (PM). Your advisors tell you no levels of these gases are safe, as 
+            ),
+            new Situation(
+                'Smog',
+                [
+                    new SubProblem(
+                        'Smog description',
+                        `Smog is a mixture of pollutants, mainly ozone and particulate matter (PM). Your advisors tell you no levels of these gases are safe, as 
                         any amount can cause inflammation of airways and asthma attacks. Ozone is created when nitrogen oxides interact with human-made organic compounds 
                         from vehicle exhaust and industrial processes. PM is made of very small particles that can penetrate deep into the lungs, causing severe symptoms. 
                         These often come from the combustion of fossil fuels.`
-                    },
-                    {
-                    title: "Smog is killing and hospitalizing people",
-                    description: `In 2014, your advisors estimate 1300 people died prematurely due to smog and air pollution in Toronto. While this is a decrease from 2004 
+                    ),
+                    new SubProblem(
+                        'Smog is killing and hospitalizing people',
+                        `In 2014, your advisors estimate 1300 people died prematurely due to smog and air pollution in Toronto. While this is a decrease from 2004 
                         (1700 people), it is still a very high number. Additionally, 3550 people are hospitalized each year due to air pollution. This disproportionately 
                         affects children, as they breathe more air compared to their body mass.`
-                    },
-                    {
-                    title: "Economic costs",
-                    description: `Your financial advisor estimates smog costs Toronto's economy at least $2.4 billion each year, including $150 million in healthcare costs 
+                    ),
+                    new SubProblem(
+                        'Economic costs',
+                        `Your financial advisor estimates smog costs Toronto's economy at least $2.4 billion each year, including $150 million in healthcare costs 
                         and $128 million in lost productivity. These costs are driven by healthcare expenses, missed workdays, and the premature deaths and suffering caused 
                         by smog.`
-                    }
+                    )
                 ],
-                options: [
-                    {
-                    icon: "💵",
-                    title: "The financial advisor suggests implementing a commercial parking lot levy",
-                    description: `To generate more income, your finance advisor suggests implementing a tax on large commercial parking lots. He explains it is commonly used 
+                [
+                    new Option(
+                        'The financial advisor suggests implementing a commercial parking lot levy',
+                        `To generate more income, your finance advisor suggests implementing a tax on large commercial parking lots. He explains it is commonly used 
                         by other cities such as New York, Los Angeles, Montreal, and Vancouver. He estimates it would generate $108 million per year. Additionally, it would 
                         encourage people to use alternative methods of transportation, decreasing the amount of ozone in the air. However, it would increase parking costs, 
                         which would not be popular among some residents.`,
-                    moneyEffect: -108,
-                    supportEffect: -5,
-                    resistanceEffect: 8
-                    },
-                    {
-                    icon: "🌎",
-                    title: "The sustainability advisor suggests implementing a congestion pricing system",
-                    description: `The advisor explains that many cities have implemented tolls on driving into their downtown cores. This will raise money for other 
+                        '💵', -108, -5, 8
+                    ),
+                    new Option(
+                        'The sustainability advisor suggests implementing a congestion pricing system',
+                        `The advisor explains that many cities have implemented tolls on driving into their downtown cores. This will raise money for other 
                         initiatives, and will encourage people to switch to alternative modes of transportation. If we charged the same amount as New York, and current 
                         traffic patterns stayed the same, the advisor estimates over $500 million in annual revenue. Additionally, it will incentivize people to get out 
                         of their cars, decreasing the amount of ozone in the air. However, it is a very unpopular initiative, as over 225,000 vehicles drive through 
                         downtown every day.`,
-                    moneyEffect: -500,
-                    supportEffect: -20,
-                    resistanceEffect: 15
-                    },
-                    {
-                    icon: "🪢",
-                    title: "The community outreach advisor suggests investing in pedestrian infrastructure",
-                    description: `The advisor explains over 20% of car trips in Toronto are less than 2km, an easily walkable distance, and 55% are less than 7km, within 
+                        '🌎', -500, -20, 15
+                    ),
+                    new Option(
+                        'The community outreach advisor suggests investing in pedestrian infrastructure',
+                        `The advisor explains over 20% of car trips in Toronto are less than 2km, an easily walkable distance, and 55% are less than 7km, within 
                         comfortable biking distance. An investment in pedestrian and cycling infrastructure will incentivize people to get out of their cars, reducing 
                         ozone levels. Additionally, walking and cycling has several health benefits as it reduces obesity, type II diabetes, cardiovascular disease, and 
                         certain types of cancer. Your advisor estimates the plan would cost $50 billion dollars over 25 years, or $2 billion this year.`,
-                    moneyEffect: 2000,
-                    supportEffect: 12,
-                    resistanceEffect: 20
-                    },
-                    {
-                    icon: "🚌",
-                    title: "The public transportation advisor suggests decarbonizing the TTC",
-                    description: `The advisor explains that the TTC already operates the largest e-bus fleet in North America, and they aim to have 25% of their 2000-bus 
+                        '🪢', 2000, 12, 20
+                    ),
+                    new Option(
+                        'The public transportation advisor suggests decarbonizing the TTC',
+                        `The advisor explains that the TTC already operates the largest e-bus fleet in North America, and they aim to have 25% of their 2000-bus 
                         fleet electrified by the end of 2025. Diesel buses are a major source of particulate matter and nitrogen oxides, key components of smog. The advisor 
                         estimates this initiative will cost $700 million.`,
-                    moneyEffect: 700,
-                    supportEffect: 8,
-                    resistanceEffect: 16
-                    }
+                        '🚌', 700, 8, 16
+                    )
                 ]
-                }
+            )
+        ];
 
-        ]
 
         let currentIndex = 0;
         let budget = 20000;
@@ -216,7 +212,7 @@
             currentIndex++;
             
             //clear the body
-            document.body.innerHTML = "";
+            document.body.innerHTML = '';
 
             // Create main wrapper
             const mainWrapper = document.createElement('div');
@@ -236,22 +232,22 @@
 
 
             //put in the subproblems
-            decisions[currentIndex].descriptions.forEach((subproblem) => {
-                const subProblemWrapper = document.createElement("div");
-                subProblemWrapper.classList.add("subProblemWrapper");
+            decisions[currentIndex].subproblems.forEach((subproblem) => {
+                const subProblemWrapper = document.createElement('div');
+                subProblemWrapper.classList.add('subProblemWrapper');
 
                 //title element
-                const title = document.createElement("h2");
+                const title = document.createElement('h2');
                 title.innerHTML = subproblem.title;
 
                 // Description element (hidden by default)
-                const description = document.createElement("p");
+                const description = document.createElement('p');
                 description.innerHTML = subproblem.description;
-                description.classList.add("optionDescription");
+                description.classList.add('optionDescription');
 
                 //open/close on click
                 subProblemWrapper.onclick = () => {
-                    description.classList.toggle("open");
+                    description.classList.toggle('open');
                 };
 
                 subProblemWrapper.appendChild(title);
@@ -263,41 +259,41 @@
             const decisionsWrapper = document.createElement('div');
             decisionsWrapper.id = 'decisionsWrapper';
 
-            decisionsWrapper.innerHTML = "";
+            decisionsWrapper.innerHTML = '';
             decisions[currentIndex].options.forEach((option, i) => {
-                const mainDiv = document.createElement("div");
+                const mainDiv = document.createElement('div');
 
-                const optionWrapper = document.createElement("div");
-                optionWrapper.classList.add("optionBox");
+                const optionWrapper = document.createElement('div');
+                optionWrapper.classList.add('optionBox');
 
                 // Icon element
-                const iconSpan = document.createElement("span");
-                iconSpan.classList.add("optionIcon");
+                const iconSpan = document.createElement('span');
+                iconSpan.classList.add('optionIcon');
                 iconSpan.innerHTML = option.icon;
 
                 //next button
-                const nextButton = document.createElement("button");
-                nextButton.classList.add("nextButton");
-                nextButton.innerHTML = "SELECT";
+                const nextButton = document.createElement('button');
+                nextButton.classList.add('nextButton');
+                nextButton.innerHTML = 'SELECT';
                 nextButton.onclick = () => showOutcome(i);
 
                 // Title element
-                const title = document.createElement("h3");
+                const title = document.createElement('h3');
                 title.innerHTML = option.title;
 
                 // Container for icon + title (row)
-                const headerContainer = document.createElement("div");
-                headerContainer.classList.add("optionHeader");
+                const headerContainer = document.createElement('div');
+                headerContainer.classList.add('optionHeader');
                 headerContainer.appendChild(iconSpan);
                 headerContainer.appendChild(nextButton);
 
                 // Description element (hidden by default)
-                const description = document.createElement("p");
+                const description = document.createElement('p');
                 description.innerHTML = option.description;
-                description.classList.add("optionDescription");
+                description.classList.add('optionDescription');
 
                 optionWrapper.onclick = () => {
-                    description.classList.toggle("open");
+                    description.classList.toggle('open');
                 };
 
                 // Assemble
@@ -315,7 +311,7 @@
         }
 
         const showOutcome = (selectedOption) => { //shows outcome when selection is made. selectedOption is the index in the decisions array
-            document.body.innerHTML = "";
+            document.body.innerHTML = '';
 
             // Create main wrapper
             const mainWrapper = document.createElement('div');
@@ -329,69 +325,78 @@
             mainWrapper.appendChild(mainTitle);
 
             //show each result
-            const statsDisplayContainer = document.createElement("div");
-            statsDisplayContainer.className = "outcomesListWrapper";
+            const statsDisplayContainer = document.createElement('div');
+            statsDisplayContainer.className = 'outcomesListWrapper';
+
+            //helper function for cost, public support, and climate res
+            //DOES NOT update the counter variables.
+            const createOutcomeElement = (
+                getTextFunction,
+                value,
+                positiveColor = 'rgb(50, 200, 50)', 
+                negativeColor = 'rgb(200, 50, 50)', 
+                neutralColor = 'grey',
+            ) => {
+                const container = document.createElement('div');
+                container.className = 'outcomeWrapper';
+                
+                const textElement = document.createElement('h2');
+                textElement.innerHTML = getTextFunction(value); 
+                if (value==0){
+                    textElement.style.color = neutralColor;
+                } else if (value<0){
+                    textElement.style.color = negativeColor;
+                } else {
+                    textElement.style.color = positiveColor;
+                }
+                container.appendChild(textElement);
+                return container;
+            }
 
             //cost
-            const moneyChangeContainer = document.createElement("div");
-            moneyChangeContainer.className = "outcomeWrapper";
-
-            const moneyChangeText = document.createElement("h2");
-
-            const cost = decisions[currentIndex].options[selectedOption].moneyEffect;
+            const cost = decisions[currentIndex].options[selectedOption].cost;
             budget -= cost;
+
+            const costElement = createOutcomeElement(
+                (value) => value > 1000 
+                    ? `💰 Cost: $${value / 1000} billion` 
+                    : `💰 Cost: $${value} million`,
+                cost,
+                'rgb(50, 200, 50)', 'grey', 'grey'
+            );
             
-            //set color and append
-            moneyChangeText.style.color = 'grey';
-            moneyChangeText.innerHTML = cost > 1000 ? `💰  Cost: $${cost/1000} billion` : `💰  Cost: $${cost} million`;
-            moneyChangeContainer.appendChild(moneyChangeText);
+            //public support change
+            const psValue = decisions[currentIndex].options[selectedOption].psChange;
+            publicSupport += psValue;
 
-            
+            const psElement = createOutcomeElement(
+                (value) => `🗣️ Public Support Change: ${value > 0 ? '+' : ''}${value}`,
+                psValue
+            );
 
-            //public suport change
-            const suportChangeContainer = document.createElement("div");
-            suportChangeContainer.className = "outcomeWrapper";
+            //climate resistance
+            const crValue = decisions[currentIndex].options[selectedOption].crChange;
+            climateResistance += crValue;
 
-            const suportChangeText = document.createElement("h2");
+            const crElement = createOutcomeElement(
+                (value) => value < 0 ? 
+                    `🛡️ Climate Change Resistance Change: ${crValue}` : 
+                    `🛡️ Climate Change Resistance Change: +${crValue}`,
+                psValue
+            );
 
-            const suportValue = decisions[currentIndex].options[selectedOption].supportEffect;
-            publicSupport += suportValue;
-            
-            //set color and append
-            suportChangeText.style.color = suportValue < 0 ? 'rgb(200, 50, 50)' : 'rgb(50, 200, 50)';
-            suportChangeText.innerHTML = suportValue < 0 ? ` 🗣️ Public Support Change: ${suportValue}` : ` 🗣️ Public Support Change: +${suportValue}`;
-            suportChangeContainer.appendChild(suportChangeText);
+            //next button
+            const nextButton = createOutcomeElement(
+                (value) => 'Next',
+                1,
+                'rgb(50, 200, 50)',
+            );
+            nextButton.className = 'nextSituationButton';
+            nextButton.firstChild.style.textAlign = 'center';
 
-            // climate res change
-            const resistanceChangeContainer = document.createElement("div");
-            resistanceChangeContainer.className = "outcomeWrapper";
-
-            const resistanceChangeText = document.createElement("h2");
-
-            const resistanceValue = decisions[currentIndex].options[selectedOption].resistanceEffect;
-            climateResistance += resistanceValue;
-
-            // Set color and append
-            resistanceChangeText.style.color = resistanceValue < 0 ? 'rgb(200, 50, 50)' : 'rgb(50, 200, 50)';
-            resistanceChangeText.innerHTML = resistanceValue < 0 ? ` 🛡️ Climate Change Resistance Change: ${resistanceValue}` : ` 🛡️ Climate Change Resistance Change: +${resistanceValue}`          
-            resistanceChangeContainer.appendChild(resistanceChangeText);
-
-            // next button
-            const nextButton = document.createElement("div");
-            nextButton.className = "nextSituationButton";
-
-            const nextButtonText = document.createElement("h2");
-            nextButtonText.style.textAlign = 'center';
-            nextButtonText.style.width = '100%';
-
-            // Set color and append
-            nextButtonText.style.color = 'rgb(50, 200, 50)';
-            nextButtonText.innerHTML = "Next";          
-            nextButton.appendChild(nextButtonText);
-
-            statsDisplayContainer.appendChild(moneyChangeContainer);
-            statsDisplayContainer.appendChild(suportChangeContainer);
-            statsDisplayContainer.appendChild(resistanceChangeContainer);
+            statsDisplayContainer.appendChild(costElement);
+            statsDisplayContainer.appendChild(psElement);
+            statsDisplayContainer.appendChild(crElement);
             statsDisplayContainer.appendChild(nextButton);
 
             nextButton.onclick = next;
