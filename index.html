@@ -35,6 +35,22 @@
             get psChange(){ return this._psChange; }
             get crChange(){ return this._crChange; }
 
+            get costDisplayString(){
+                return this._cost > 1000 
+                    ? `💰 Cost: $${this._cost / 1000} billion` 
+                    : `💰 Cost: $${this._cost} million`;
+            }
+
+            get psDisplayString(){
+                return `🗣️ Public Support Change: ${this._psChange > 0 ? '+' : ''}${this._psChange}`;
+            }
+
+            get crDisplayString(){
+                return this._crChange < 0 ? 
+                    `🛡️ Climate Change Resistance Change: ${this._crChange}` : 
+                    `🛡️ Climate Change Resistance Change: +${this._crChange}`;
+            }
+
         }
 
         let decisions = [
@@ -49,13 +65,13 @@
                     new SubProblem(
                         'Health Risks to Vulnerable Residents',
                         `Increased temperatures are causing health risks, especially for vulnerable residents who may not have access to adequate indoor 
-                        cooling, leading to higher rates of heat stroke (1). Many residents are complaining about symptoms like dizziness, blurred vision, seizures, 
+                        cooling, leading to higher rates of heat stroke. Many residents are complaining about symptoms like dizziness, blurred vision, seizures, 
                         and dry skin due to the heat.`
                     ),
                     new SubProblem(
                         'Public Health Consequences',
                         `Your public health advisor estimates extreme heat contributes to around 120 premature deaths and many more hospitalizations every year 
-                        in Toronto, a number expected to grow much larger (2). The advisor continues by explaining that the body tries to direct more blood to the skin 
+                        in Toronto, a number expected to grow much larger. The advisor continues by explaining that the body tries to direct more blood to the skin 
                         to compensate for the heat, but that reduces blood flow elsewhere. This leads to organ dysfunction, and in some cases death.`
                     )
                 ],
@@ -115,7 +131,7 @@
                         'The sustainability advisor suggests expanding sewer capacity and building and large holding tanks.',
                         `He tells you some of Toronto's pipes are 100 years old, and are not designed to handle the 3 once-in-a-hundred-year storms we 
                         experienced in the past 10 years. He estimates the cost at $3.7 billion dollars. Once complete, the project would relieve pressure on the 
-                        sewer system and decrease damage from floods, however it would take a while to complete, and is not visible to the public. (2)`,
+                        sewer system and decrease damage from floods, however it would take a while to complete, and is not visible to the public`,
                         '🌎', 3700, -5, 25
                     ),
                     new Option(
@@ -198,6 +214,38 @@
                         fleet electrified by the end of 2025. Diesel buses are a major source of particulate matter and nitrogen oxides, key components of smog. The advisor 
                         estimates this initiative will cost $700 million.`,
                         '🚌', 700, 8, 16
+                    )
+                ]
+            ),
+            new Situation(
+                "Disease-carrying Pests",
+                [
+                    new SubProblem(
+                        "Pests are migrating north",
+                        `	As seasons get warmer, insects previously confined to warmer climates are moving north. As they come, they bring previously tropical diseases 
+                        with them. Additionally, the increase in rainfall allows these pests to reproduce faster, further spreading disease. For example, mosquitos thrive in 
+                        still water, which Toronto has plenty of after a big storm. `
+                    ),
+                    new SubProblem(
+                        "Pests spread diseases",
+                        `As ticks spread north, they spread Lyme disease. There were almost 5000 cases of Lyme disease in Ontario in 2023, compared to under 150 in 2009. 
+                        Additionally, in 2020 there were 166 cases of West Nile Virus (a mosquito-borne virus) compared to 14 in 2009. `    
+                    )
+                ],
+                [
+                    new Option(
+                        "Your community outreach advisor suggests a Lyme disease education program",
+                        `The advisor explains that many people do not know how to identify Lyme disease, and many don't take the proper precautions when hiking outdoors. 
+                        The advisor continues by explaining that while in wooded areas, people should be wearing long sleeves and pants, apply insect repellant, and 
+                        carefully check themselves for ticks frequently. However, many people do not take these precautions. The advisor predicts a $0.5 million dollar 
+                        cost for this education program.`
+                    ),
+                    new Option(
+                        "Your public health advisor suggests a Larviciding program, which is putting chemicals into still water to prevent mosquito breeding.",
+                        `The advisor explains that mosquitos breed in still water. He suggests putting chemicals such as methoprene, BS (Bacillus sphaericus) and Bti 
+                        (Bacillus thuringiensis israelensis) into basins of still water where culex mosquitos breed. He explains culex mosquitos spread West Nile Virus, 
+                        and by putting chemicals into their breeding pools, we could reduce the mosquito population. These chemicals are safe for humans. The advisor 
+                        estimates this will cost around $1.8 million.`
                     )
                 ]
             )
@@ -310,8 +358,9 @@
             document.body.appendChild(decisionsWrapper);
         }
 
-        const showOutcome = (selectedOption) => { //shows outcome when selection is made. selectedOption is the index in the decisions array
+        const showOutcome = (selectedOptionIndex) => { //shows outcome when selection is made. selectedOption is the index in the decisions array
             document.body.innerHTML = '';
+            const selectedOption = decisions[currentIndex].options[selectedOptionIndex];
 
             // Create main wrapper
             const mainWrapper = document.createElement('div');
@@ -321,7 +370,7 @@
             const mainTitle = document.createElement('h1');
             mainTitle.id = 'mainTitle';
             mainTitle.className = 'mainTitle';
-            mainTitle.innerHTML = decisions[currentIndex].options[selectedOption].title;
+            mainTitle.innerHTML = selectedOption.title;
             mainWrapper.appendChild(mainTitle);
 
             //show each result
@@ -354,19 +403,17 @@
             }
 
             //cost
-            const cost = decisions[currentIndex].options[selectedOption].cost;
+            const cost = selectedOption.cost;
             budget -= cost;
 
             const costElement = createOutcomeElement(
-                (value) => value > 1000 
-                    ? `💰 Cost: $${value / 1000} billion` 
-                    : `💰 Cost: $${value} million`,
+                (value) => selectedOption.costDisplayString,
                 cost,
                 'rgb(50, 200, 50)', 'grey', 'grey'
             );
             
             //public support change
-            const psValue = decisions[currentIndex].options[selectedOption].psChange;
+            const psValue = selectedOption.psChange;
             publicSupport += psValue;
 
             const psElement = createOutcomeElement(
@@ -375,14 +422,12 @@
             );
 
             //climate resistance
-            const crValue = decisions[currentIndex].options[selectedOption].crChange;
+            const crValue = selectedOption.psDisplayString;
             climateResistance += crValue;
 
             const crElement = createOutcomeElement(
-                (value) => value < 0 ? 
-                    `🛡️ Climate Change Resistance Change: ${crValue}` : 
-                    `🛡️ Climate Change Resistance Change: +${crValue}`,
-                psValue
+                (value) => selectedOption.crDisplayString,
+                crValue
             );
 
             //next button
