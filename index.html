@@ -31,7 +31,7 @@
                         description: `This measure is would protect renters from the health risks associated with extreme indoor heat, which is expected to become more 
                             frequent and severe due to climate change. However, it would be expensive to retrofit older buildings, which would increase rent prices.`,
                         moneyEffect: 1,
-                        supportEffect: 10,
+                        supportEffect: -10,
                         resistanceEffect: 10,
 
                     },
@@ -62,7 +62,7 @@
                             electricity use and greenhouse gas emissions compared to conventional air conditioning. Expanding this infrastructure would help the city adapt 
                             to hotter summers while advancing its climate goals. However, it would take a while to complete, and would not affect people that don't live 
                             downtown.`,
-                        moneyEffect: 50,
+                        moneyEffect: 100,
                         supportEffect: -15,
                         resistanceEffect: 20,
                     }
@@ -135,12 +135,15 @@
                 ]
 
             },
-            {
+            {//smog -> smog explained, killing and hospitalizing people, economic costs
                 
             }
         ]
 
         let currentIndex = 0;
+        let budget = 20000;
+        let publicSupport = 100;
+        let climateResistance = 0;
         const next = () => { //clears current screen and displays the next selection
             currentIndex++;
             
@@ -268,10 +271,11 @@
             const moneyChangeText = document.createElement("h2");
 
             const cost = decisions[currentIndex].options[selectedOption].moneyEffect;
+            budget -= cost;
             
             //set color and append
             moneyChangeText.style.color = 'grey';
-            moneyChangeText.innerHTML = `💰  Cost: $${cost} million`;
+            moneyChangeText.innerHTML = cost > 1000 ? `💰  Cost: $${cost/1000} billion` : `💰  Cost: $${cost} million`;
             moneyChangeContainer.appendChild(moneyChangeText);
 
             
@@ -283,6 +287,7 @@
             const suportChangeText = document.createElement("h2");
 
             const suportValue = decisions[currentIndex].options[selectedOption].supportEffect;
+            publicSupport += suportValue;
             
             //set color and append
             suportChangeText.style.color = suportValue < 0 ? 'rgb(200, 50, 50)' : 'rgb(50, 200, 50)';
@@ -296,6 +301,7 @@
             const resistanceChangeText = document.createElement("h2");
 
             const resistanceValue = decisions[currentIndex].options[selectedOption].resistanceEffect;
+            climateResistance += resistanceValue;
 
             // Set color and append
             resistanceChangeText.style.color = resistanceValue < 0 ? 'rgb(200, 50, 50)' : 'rgb(50, 200, 50)';
