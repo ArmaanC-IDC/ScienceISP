@@ -31,8 +31,8 @@
                         description: `This measure is would protect renters from the health risks associated with extreme indoor heat, which is expected to become more 
                             frequent and severe due to climate change. However, it would be expensive to retrofit older buildings, which would increase rent prices.`,
                         moneyEffect: 1,
-                        supportEffect: -10,
-                        resistanceEffect: 10,
+                        supportEffect: -5,
+                        resistanceEffect: 15,
 
                     },
                     {
@@ -41,8 +41,8 @@
                         description: `A subsidy for installing high-efficiency heat pumps or air conditioners would require an investment of $20-30 million annually. 
                             It would increase access to cooling for all residents.`,
                         moneyEffect: 30,
-                        supportEffect: 10,
-                        resistanceEffect: 5,
+                        supportEffect: 15,
+                        resistanceEffect: 12,
                     },
                     {
                         icon: "🪢",
@@ -52,8 +52,8 @@
                             maintain and promote these spaces, especially during heat warnings. However, these spaces may become overcrowded during heat waves and may not 
                             reach all residents.`,
                         moneyEffect: 50,
-                        supportEffect: -10,
-                        resistanceEffect: 15,
+                        supportEffect: 5,
+                        resistanceEffect: 8,
                     },
                     {
                         icon: "🌎",
@@ -63,7 +63,7 @@
                             to hotter summers while advancing its climate goals. However, it would take a while to complete, and would not affect people that don't live 
                             downtown.`,
                         moneyEffect: 100,
-                        supportEffect: -15,
+                        supportEffect: -10,
                         resistanceEffect: 20,
                     }
                 ]
@@ -96,18 +96,18 @@
                             experienced in the past 10 years. He estimates the cost at $3.7 billion dollars. Once complete, the project would relieve pressure on the 
                             sewer system and decrease damage from floods, however it would take a while to complete, and is not visible to the public. (2)`,
                         moneyEffect: 3700,
-                        supportEffect: -10,
-                        resistanceEffect: 30,
+                        supportEffect: -5,
+                        resistanceEffect: 25,
                     },
                     {
                         icon: "🪢",
                         title: "The community outreach advisor suggests building custom flood mitigation programs for the most affected neighborhoods.",
                         description: `He is currently working on preliminary studies, and has 60 out of the 67 studies completed. He has spent $1.1 billion on the project 
-                            out of his department's budget, but is requesting more funding to complete the program. He is estimating an $18.6 billion dollar cost. 
-                            This would show the city you are taking the problem seriously in the short and long term, but would be very expensive. (2)`,
-                        moneyEffect: 18600,
-                        supportEffect: 30,
-                        resistanceEffect: 30,
+                            out of his department's budget, but is requesting more funding to complete the program. He is estimating an $18.6 billion dollar cost over 5 years, 
+                            or about $3.7 billion per year. This would be very popular in neighborhoods faced with flooding, but results won't benifit everyone.`,
+                        moneyEffect: 3720,
+                        supportEffect: 10,
+                        resistanceEffect: 18,
                     },
                     {
                         icon: "🏥",
@@ -116,7 +116,7 @@
                             to a water treatment plant, and divert water away from current outdated sewage systems. She projects a $3 billion dollar cost, 
                             but it would not be complete for some time.`,
                         moneyEffect: 3000,
-                        supportEffect: -5,
+                        supportEffect: 0,
                         resistanceEffect: 20
 
                     },
@@ -129,15 +129,83 @@
                             strain on sewer systems. He expects the cost to be around $3 billion for these incentive programs, but most of the cost would be covered by the 
                             private sector. However, many members of the public don't believe that these technologies can effectively combat the storms.`,
                         moneyEffect: 100,
-                        supportEffect: 5,
-                        resistanceEffect: 10
+                        supportEffect: 10,
+                        resistanceEffect: 15
                     }
                 ]
 
             },
-            {//smog -> smog explained, killing and hospitalizing people, economic costs
-                
-            }
+            {
+                title: "Smog",
+                descriptions: [
+                    {
+                    title: "Smog description",
+                    description: `Smog is a mixture of pollutants, mainly ozone and particulate matter (PM). Your advisors tell you no levels of these gases are safe, as 
+                        any amount can cause inflammation of airways and asthma attacks. Ozone is created when nitrogen oxides interact with human-made organic compounds 
+                        from vehicle exhaust and industrial processes. PM is made of very small particles that can penetrate deep into the lungs, causing severe symptoms. 
+                        These often come from the combustion of fossil fuels.`
+                    },
+                    {
+                    title: "Smog is killing and hospitalizing people",
+                    description: `In 2014, your advisors estimate 1300 people died prematurely due to smog and air pollution in Toronto. While this is a decrease from 2004 
+                        (1700 people), it is still a very high number. Additionally, 3550 people are hospitalized each year due to air pollution. This disproportionately 
+                        affects children, as they breathe more air compared to their body mass.`
+                    },
+                    {
+                    title: "Economic costs",
+                    description: `Your financial advisor estimates smog costs Toronto's economy at least $2.4 billion each year, including $150 million in healthcare costs 
+                        and $128 million in lost productivity. These costs are driven by healthcare expenses, missed workdays, and the premature deaths and suffering caused 
+                        by smog.`
+                    }
+                ],
+                options: [
+                    {
+                    icon: "💵",
+                    title: "The financial advisor suggests implementing a commercial parking lot levy",
+                    description: `To generate more income, your finance advisor suggests implementing a tax on large commercial parking lots. He explains it is commonly used 
+                        by other cities such as New York, Los Angeles, Montreal, and Vancouver. He estimates it would generate $108 million per year. Additionally, it would 
+                        encourage people to use alternative methods of transportation, decreasing the amount of ozone in the air. However, it would increase parking costs, 
+                        which would not be popular among some residents.`,
+                    moneyEffect: -108,
+                    supportEffect: -5,
+                    resistanceEffect: 8
+                    },
+                    {
+                    icon: "🌎",
+                    title: "The sustainability advisor suggests implementing a congestion pricing system",
+                    description: `The advisor explains that many cities have implemented tolls on driving into their downtown cores. This will raise money for other 
+                        initiatives, and will encourage people to switch to alternative modes of transportation. If we charged the same amount as New York, and current 
+                        traffic patterns stayed the same, the advisor estimates over $500 million in annual revenue. Additionally, it will incentivize people to get out 
+                        of their cars, decreasing the amount of ozone in the air. However, it is a very unpopular initiative, as over 225,000 vehicles drive through 
+                        downtown every day.`,
+                    moneyEffect: -500,
+                    supportEffect: -20,
+                    resistanceEffect: 15
+                    },
+                    {
+                    icon: "🪢",
+                    title: "The community outreach advisor suggests investing in pedestrian infrastructure",
+                    description: `The advisor explains over 20% of car trips in Toronto are less than 2km, an easily walkable distance, and 55% are less than 7km, within 
+                        comfortable biking distance. An investment in pedestrian and cycling infrastructure will incentivize people to get out of their cars, reducing 
+                        ozone levels. Additionally, walking and cycling has several health benefits as it reduces obesity, type II diabetes, cardiovascular disease, and 
+                        certain types of cancer. Your advisor estimates the plan would cost $50 billion dollars over 25 years, or $2 billion this year.`,
+                    moneyEffect: 2000,
+                    supportEffect: 12,
+                    resistanceEffect: 20
+                    },
+                    {
+                    icon: "🚌",
+                    title: "The public transportation advisor suggests decarbonizing the TTC",
+                    description: `The advisor explains that the TTC already operates the largest e-bus fleet in North America, and they aim to have 25% of their 2000-bus 
+                        fleet electrified by the end of 2025. Diesel buses are a major source of particulate matter and nitrogen oxides, key components of smog. The advisor 
+                        estimates this initiative will cost $700 million.`,
+                    moneyEffect: 700,
+                    supportEffect: 8,
+                    resistanceEffect: 16
+                    }
+                ]
+                }
+
         ]
 
         let currentIndex = 0;
