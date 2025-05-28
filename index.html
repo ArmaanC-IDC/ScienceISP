@@ -38,12 +38,12 @@
             get costDisplayString(){
                 if (this.cost>0){
                     return this._cost > 1000 
-                    ? `💰 Profit: $${this._cost / 1000} billion` 
-                    : `💰 Profit: $${this._cost} million`
-                }
-                return this._cost > 1000 
                     ? `💰 Cost: $${this._cost / 1000} billion` 
-                    : `💰 Cost: $${this._cost} million`;
+                    : `💰 Cost: $${this._cost} million`
+                }
+                return this.cost < -1000 
+                    ? `💰 Profit: $${this._cost / 1000} billion` 
+                    : `💰 Profit: $${this._cost} million`;
             }
 
             get psDisplayString(){
@@ -56,6 +56,24 @@
                     `🛡️ Climate Change Resistance Change: +${this._crChange}`;
             }
 
+            static getCostDisplayString(cost){
+                if (cost>0){
+                    return cost > 1000 
+                    ? `💰 Remaining Budget: $${cost / 1000} billion` 
+                    : `💰 Remaining Budget: $${cost} million`
+                }
+                return cost > 1000 
+                    ? `💰 You went $${cost / 1000} billion over budget` 
+                    : `💰 You went: $${cost} million over budget`;
+            }
+
+            static getPsDisplayString(ps){
+                return `🗣️ Public Support: ${ps > 0 ? '+' : ''}${ps}`;
+            }
+
+            static getCrDisplayString(cr){
+                return `🛡️ Climate Change Resistance: +${cr}`;
+            }
         }
 
         let decisions = [
@@ -85,13 +103,13 @@
                         'The public health advisor suggests establishing a law to ensure all residential units can be kept at a temperature under 26°C.',
                         `This measure is would protect renters from the health risks associated with extreme indoor heat, which is expected to become more 
                         frequent and severe due to climate change. However, it would be expensive to retrofit older buildings, which would increase rent prices.`,
-                        '🏥', 1, -5, 15
+                        '🏥', 1, -8, 15
                     ),
                     new Option(
                         'The financial advisor suggests subsidizing heat pumps or air conditioners',
                         `A subsidy for installing high-efficiency heat pumps or air conditioners would require an investment of $20-30 million annually. 
                         It would increase access to cooling for all residents.`,
-                        '💵', 30, 15, 12
+                        '💵', 30, 13, 12
                     ),
                     new Option(
                         'The community outreach advisor suggests equipping libraries and other community centers with air conditioning and opening them to the public',
@@ -137,14 +155,14 @@
                         `He tells you some of Toronto's pipes are 100 years old, and are not designed to handle the 3 once-in-a-hundred-year storms we 
                         experienced in the past 10 years. He estimates the cost at $3.7 billion dollars. Once complete, the project would relieve pressure on the 
                         sewer system and decrease damage from floods, however it would take a while to complete, and is not visible to the public`,
-                        '🌎', 3700, -5, 25
+                        '🌎', 3700, -10, 25
                     ),
                     new Option(
                         'The community outreach advisor suggests building custom flood mitigation programs for the most affected neighborhoods.',
                         `He is currently working on preliminary studies, and has 60 out of the 67 studies completed. He has spent $1.1 billion on the project 
                         out of his department's budget, but is requesting more funding to complete the program. He is estimating an $18.6 billion dollar cost over 5 years, 
                         or about $3.7 billion per year. This would be very popular in neighborhoods faced with flooding, but results won't benifit everyone.`,
-                        '🪢', 3720, 10, 18
+                        '🪢', 3720, 6, 18
                     ),
                     new Option(
                         'The public health advisor suggests building stormwater bypass tunnels to divert sewage and runoff during heavy rains, preventing contamination of waterways.',
@@ -160,7 +178,7 @@
                         designed to let rain water into it. It has highly permeable soil at the bottom, so the water gets absorbed into the ground, reducing the 
                         strain on sewer systems. He expects the cost to be around $3 billion for these incentive programs, but most of the cost would be covered by the 
                         private sector. However, many members of the public don't believe that these technologies can effectively combat the storms.`,
-                        '💵', 100, 10, 15
+                        '💵', 100, 4, 15
                     )
                 ]
             ),
@@ -203,7 +221,7 @@
                         traffic patterns stayed the same, the advisor estimates over $500 million in annual revenue. Additionally, it will incentivize people to get out 
                         of their cars, decreasing the amount of ozone in the air. However, it is a very unpopular initiative, as over 225,000 vehicles drive through 
                         downtown every day.`,
-                        '🌎', -500, -20, 15
+                        '🌎', -500, -15, 15
                     ),
                     new Option(
                         'The community outreach advisor suggests investing in pedestrian infrastructure',
@@ -211,14 +229,14 @@
                         comfortable biking distance. An investment in pedestrian and cycling infrastructure will incentivize people to get out of their cars, reducing 
                         ozone levels. Additionally, walking and cycling has several health benefits as it reduces obesity, type II diabetes, cardiovascular disease, and 
                         certain types of cancer. Your advisor estimates the plan would cost $50 billion dollars over 25 years, or $2 billion this year.`,
-                        '🪢', 2000, 12, 20
+                        '🪢', 2000, 10, 20
                     ),
                     new Option(
                         'The public transportation advisor suggests decarbonizing the TTC',
                         `The advisor explains that the TTC already operates the largest e-bus fleet in North America, and they aim to have 25% of their 2000-bus 
                         fleet electrified by the end of 2025. Diesel buses are a major source of particulate matter and nitrogen oxides, key components of smog. The advisor 
                         estimates this initiative will cost $700 million.`,
-                        '🚌', 700, 8, 16
+                        '🚌', 700, 5, 16
                     )
                 ]
             ),
@@ -244,15 +262,15 @@
                         The advisor continues by explaining that while in wooded areas, people should be wearing long sleeves and pants, apply insect repellant, and 
                         carefully check themselves for ticks frequently. However, many people do not take these precautions. The advisor predicts a $0.5 million dollar 
                         cost for this education program.`,
-                        '🪢', 0, 0, 0
+                        '🪢', 0.5, 5, 2
                     ),
                     new Option(
                         'Your public health advisor suggests a Larviciding program, which is putting chemicals into still water to prevent mosquito breeding.',
                         `The advisor explains that mosquitos breed in still water. He suggests putting chemicals such as methoprene, BS (Bacillus sphaericus) and Bti 
                         (Bacillus thuringiensis israelensis) into basins of still water where culex mosquitos breed. He explains culex mosquitos spread West Nile Virus, 
-                        and by putting chemicals into their breeding pools, we could reduce the mosquito population. These chemicals are safe for humans. The advisor 
-                        estimates this will cost around $1.8 million.`,
-                        '🏥', 0, 0, 0
+                        and by putting chemicals into their breeding pools, we could reduce the mosquito population. While these chemicals are safe for humans, many people 
+                        do not like the idea of the government spreading chemicals. The advisor estimates the program will cost around $1.8 million.`,
+                        '🏥', 1.8, -5, 10
                     )
                 ]
             )
@@ -261,7 +279,7 @@
 
         let currentIndex = 0;
         let budget = 5000;
-        let publicSupport = 100;
+        let publicSupport = 10;
         let climateResistance = 0;
         const next = () => { //clears current screen and displays the next selection
             currentIndex++;
@@ -364,6 +382,8 @@
             // Append everything to the document body
             document.body.appendChild(mainWrapper);
             document.body.appendChild(decisionsWrapper);
+
+            showBudgetIcons();
         }
 
         const showOutcome = (selectedOptionIndex) => { //shows outcome when selection is made. selectedOption is the index in the decisions array
@@ -459,6 +479,7 @@
             document.body.appendChild(mainWrapper);
             document.body.appendChild(statsDisplayContainer);
 
+            showBudgetIcons();
         }
         
         const endGame = () => {
@@ -507,34 +528,24 @@
 
             //cost
             const costElement = createOutcomeElement(
-                (value) => budget > 1000 
-                    ? `💰 Leftover budget: $${budget / 1000} billion` 
-                    : `💰 Leftover budget: $${budget} million`,
+                (value) => Option.getCostDisplayString(value),
                 budget,
                 'rgb(50, 200, 50)', 'grey', 'grey'
             );
 
             //ps
             const psElement = createOutcomeElement(
-                (value) => `🗣️ Public Support: ${publicSupport > 0 ? '+' : ''}${publicSupport}`,
+                (value) => Option.getPsDisplayString(value),
                 publicSupport,
                 'rgb(50, 200, 50)', 'grey', 'grey'
             );
 
             //cr
             const crElement = createOutcomeElement(
-                (value) => climateResistance < 0 ? 
-                    `🛡️ Climate Change Resistance: ${climateResistance}` : 
-                    `🛡️ Climate Change Resistance: +${climateResistance}`,
+                (value) => Option.getCrDisplayString(value),
                 climateResistance,
                 'rgb(50, 200, 50)', 'grey', 'grey'
             );
-
-            // const crElement = createOutcomeElement(
-            //     (value) => 'TEXT',
-            //     climateResistance,
-            //     'rgb(50, 200, 50)', 'grey', 'grey'
-            // );
 
             statsDisplayContainer.appendChild(costElement);
             statsDisplayContainer.appendChild(psElement);
@@ -543,6 +554,31 @@
             document.body.appendChild(statsDisplayContainer);
             
 
+            showBudgetIcons();
+        }
+        
+        const showBudgetIcons = () => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'budgetIconsWrapper';
+
+            const costElement = document.createElement('h2');
+            costElement.innerHTML = Option.getCostDisplayString(budget);
+            costElement.style.textAlign = 'center';
+
+            const psElement = document.createElement('h2');
+            psElement.innerHTML = Option.getPsDisplayString(publicSupport);
+            psElement.style.textAlign = 'center';
+
+            const crElement = document.createElement('h2');
+            crElement.innerHTML = Option.getCrDisplayString(climateResistance);
+            crElement.style.textAlign = 'center';
+
+            wrapper.appendChild(costElement);
+            wrapper.appendChild(psElement);
+            wrapper.appendChild(crElement);
+
+
+            document.body.appendChild(wrapper);
         }
         //when it loads, show the next selection. init to -1 so next is 0.
         window.addEventListener('load', () => {
@@ -555,6 +591,18 @@
 
     </script>
     <style>
+        .budgetIconsWrapper{
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            bottom: 2vh;
+            width: 90%;
+            margin-left: 5%;
+            background-color: #ffffff;
+            border-radius: 999px;
+            padding: 0 1em;
+            border: 5px solid #0088bb;
+        }
         body {
             min-height: 100vh;
             background: linear-gradient(135deg, #71a7f7 0%, #ffffff 100%);
