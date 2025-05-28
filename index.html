@@ -36,6 +36,11 @@
             get crChange(){ return this._crChange; }
 
             get costDisplayString(){
+                if (this.cost>0){
+                    return this._cost > 1000 
+                    ? `💰 Profit: $${this._cost / 1000} billion` 
+                    : `💰 Profit: $${this._cost} million`
+                }
                 return this._cost > 1000 
                     ? `💰 Cost: $${this._cost / 1000} billion` 
                     : `💰 Cost: $${this._cost} million`;
@@ -255,7 +260,7 @@
 
 
         let currentIndex = 0;
-        let budget = 20000;
+        let budget = 5000;
         let publicSupport = 100;
         let climateResistance = 0;
         const next = () => { //clears current screen and displays the next selection
@@ -429,7 +434,7 @@
             climateResistance += crValue;
 
             const crElement = createOutcomeElement(
-                (value) => ,
+                (value) => selectedOption.crDisplayString,
                 crValue
             );
 
