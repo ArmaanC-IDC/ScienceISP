@@ -591,18 +591,6 @@
 
     </script>
     <style>
-        .budgetIconsWrapper{
-            display: flex;
-            justify-content: space-between;
-            position: fixed;
-            bottom: 2vh;
-            width: 90%;
-            margin-left: 5%;
-            background-color: #ffffff;
-            border-radius: 999px;
-            padding: 0 1em;
-            border: 5px solid #0088bb;
-        }
         body {
             min-height: 100vh;
             background: linear-gradient(135deg, #71a7f7 0%, #ffffff 100%);
@@ -610,6 +598,7 @@
             margin: 0;
             font-family: 'Segoe UI', Arial, sans-serif;
             animation: backgroundAnim 5s ease-in-out infinite alternate;
+            margin-bottom: 10vh;
         }
 
         @keyframes backgroundAnim{
@@ -811,8 +800,24 @@
             box-shadow: 0 2px 12px rgba(0, 0, 0, 1);
         }
 
+        .budgetIconsWrapper{
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            bottom: 2vh;
+            width: 90%;
+            margin-left: 5%;
+            background-color: #ffffff;
+            border-radius: 999px;
+            padding: 0 1em;
+            border: 5px solid #0088bb;
+        }
+
         /* when screen width is to narrow, set the grid to 1 wide */
         @media (max-width: 900px) {
+            body{
+                margin-bottom: 20vh;
+            }
             #decisionsWrapper {
                 grid-template-columns: auto;
             }
