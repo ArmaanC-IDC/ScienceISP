@@ -59,8 +59,8 @@
             static getCostDisplayString(cost){
                 if (cost>0){
                     return cost > 1000 
-                    ? `💰 Remaining Budget: $${cost / 1000} billion` 
-                    : `💰 Remaining Budget: $${cost} million`
+                    ? `💰 Remaining Budget: $${Math.round(cost / 10) / 100} billion` 
+                    : `💰 Remaining Budget: $${Math.round(cost * 100) / 10} million`
                 }
                 return cost > 1000 
                     ? `💰 You went $${cost / 1000} billion over budget` 
@@ -81,7 +81,7 @@
                 'Extreme Heat',
                 [
                     new SubProblem(
-                        'Rising Temperatures and Climate Change',
+                        'Rising Temperatures',
                         `Extreme heat is increasing in Toronto due to climate change. Annual temperatures are expected to rise more than 2 degrees higher 
                         than 1980 levels before 2040.`
                     ),
@@ -139,7 +139,7 @@
                         which is where ice flowing down a river blocks the river causing flooding.`
                     ),
                     new SubProblem(
-                        'Wetter Wet Days and Dryer Dry Days',
+                        'Wetter Wet Days and Drier Dry Days',
                         `The maximum amount of precipitation in one day is predicted to increase 17% by the 2050s. This makes the dry days dryer causing more 
                         droughts, and the wet days even wetter causing massive structural damage.`
                     ),
@@ -160,8 +160,8 @@
                     new Option(
                         'The community outreach advisor suggests building custom flood mitigation programs for the most affected neighborhoods.',
                         `He is currently working on preliminary studies, and has 60 out of the 67 studies completed. He has spent $1.1 billion on the project 
-                        out of his department's budget, but is requesting more funding to complete the program. He is estimating an $18.6 billion dollar cost over 5 years, 
-                        or about $3.7 billion per year. This would be very popular in neighborhoods faced with flooding, but results won't benifit everyone.`,
+                        out of his department's budget, but is requesting more funding to complete the program. He is estimating a $3.7 billion dollar cost. 
+                        This would be very popular in neighborhoods faced with flooding, but results won't benefit everyone.`,
                         '🪢', 3720, 6, 18
                     ),
                     new Option(
@@ -246,7 +246,7 @@
                     new SubProblem(
                         'Pests are migrating north',
                         `	As seasons get warmer, insects previously confined to warmer climates are moving north. As they come, they bring previously tropical diseases 
-                        with them. Additionally, the increase in rainfall allows these pests to reproduce faster, further spreading disease. For example, mosquitos thrive in 
+                        with them. Additionally, the increase in rainfall allows these pests to reproduce faster, further spreading disease. For example, mosquitoes thrive in 
                         still water, which Toronto has plenty of after a big storm. `
                     ),
                     new SubProblem(
@@ -259,15 +259,15 @@
                     new Option(
                         'Your community outreach advisor suggests a Lyme disease education program',
                         `The advisor explains that many people do not know how to identify Lyme disease, and many don't take the proper precautions when hiking outdoors. 
-                        The advisor continues by explaining that while in wooded areas, people should be wearing long sleeves and pants, apply insect repellant, and 
+                        The advisor continues by explaining that while in wooded areas, people should be wearing long sleeves and pants, apply insect repellent, and 
                         carefully check themselves for ticks frequently. However, many people do not take these precautions. The advisor predicts a $0.5 million dollar 
                         cost for this education program.`,
                         '🪢', 0.5, 5, 2
                     ),
                     new Option(
                         'Your public health advisor suggests a Larviciding program, which is putting chemicals into still water to prevent mosquito breeding.',
-                        `The advisor explains that mosquitos breed in still water. He suggests putting chemicals such as methoprene, BS (Bacillus sphaericus) and Bti 
-                        (Bacillus thuringiensis israelensis) into basins of still water where culex mosquitos breed. He explains culex mosquitos spread West Nile Virus, 
+                        `The advisor explains that mosquitoes breed in still water. He suggests putting chemicals such as methoprene, BS (Bacillus sphaericus) and Bti 
+                        (Bacillus thuringiensis israelensis) into basins of still water where culex mosquitoes breed. He explains culex mosquitoes spread West Nile Virus, 
                         and by putting chemicals into their breeding pools, we could reduce the mosquito population. While these chemicals are safe for humans, many people 
                         do not like the idea of the government spreading chemicals. The advisor estimates the program will cost around $1.8 million.`,
                         '🏥', 1.8, -5, 10
@@ -552,9 +552,19 @@
             statsDisplayContainer.appendChild(crElement);
 
             document.body.appendChild(statsDisplayContainer);
-            
 
-            showBudgetIcons();
+            const sourcesLink = document.createElement('div');
+            sourcesLink.className = 'sourcesLinkContainer';
+            
+            const textElement = document.createElement('a');
+            textElement.innerHTML = "See sources here"; 
+            textElement.style.color = 'black';
+            textElement.href = 'https://bayviewglen-my.sharepoint.com/:w:/g/personal/achandarana_bayviewglen_ca/EdwHvZr166xKlS61AfWaI8oBbP7ona-Xz3JjER5uqham3g?e=zG9Chc';
+            textElement.target = '_blank';
+            textElement.style.fontSize = '2em';
+            sourcesLink.appendChild(textElement);
+
+            document.body.appendChild(sourcesLink);
         }
         
         const showBudgetIcons = () => {
@@ -598,7 +608,6 @@
             margin: 0;
             font-family: 'Segoe UI', Arial, sans-serif;
             animation: backgroundAnim 5s ease-in-out infinite alternate;
-            margin-bottom: 10vh;
         }
 
         @keyframes backgroundAnim{
@@ -803,8 +812,7 @@
         .budgetIconsWrapper{
             display: flex;
             justify-content: space-between;
-            position: fixed;
-            bottom: 2vh;
+            margin-bottom: 1vh;
             width: 90%;
             margin-left: 5%;
             background-color: #ffffff;
@@ -813,11 +821,25 @@
             border: 5px solid #0088bb;
         }
 
+        .sourcesLinkContainer{
+            width: 70vw;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #333333;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+            cursor: grab;
+        }
+
+        .sourcesLinkContainer:hover{
+            color: #0088bb;
+        }
+
         /* when screen width is to narrow, set the grid to 1 wide */
         @media (max-width: 900px) {
-            body{
-                margin-bottom: 20vh;
-            }
             #decisionsWrapper {
                 grid-template-columns: auto;
             }
